@@ -5,15 +5,6 @@
         <a class="navbar-brand" href="#">PicMap</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-          <li>
-            <g-signin-button
-              :params="googleSignInParams"
-              @success="onSignInSuccess"
-              @click="login"
-              @error="onSignInError">
-              Sign in
-            </g-signin-button>
-          </li>
           <li><a href="#" @click="login"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
           <li><a>
               <div class="custom-file">
