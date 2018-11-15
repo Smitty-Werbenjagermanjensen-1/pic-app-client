@@ -130,3 +130,26 @@ exports.list = function(req, res) {
   });
 
 };
+
+/*authenticate a user*/
+exports.authenticate = function (req, res) {
+
+	console.log("Hello! Input username is " + req.body.username + " and the password is " + req.body.password);
+	User.find({ username: req.body.username, password: req.body.password}).exec(function(err, userFile){
+	if (err) {
+		console.log(err);
+		res.status(500).send("Something went wrong. Try again later.");
+	} 
+	else {
+		console.log(userFile);
+		if (userFile.length > 0)
+		{
+			res.status(200).send("Success! Logging in.");
+		}
+		else
+		{
+			res.status(401).send("Incorrect username or password.");
+		}
+	}
+  });
+}

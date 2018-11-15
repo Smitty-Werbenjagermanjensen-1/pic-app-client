@@ -7,7 +7,7 @@
       <ul class="nav navbar-nav navbar-right">
           <li><a>
               <div class="custom-file">
-                  <input v-if="user != 'NULL'" type="file" class="custom-file-input" id="inputGroupFile02" style="display: none;" @change="inputHandler($event)">
+                  <input v-if="this.username != 'NULL'" type="file" class="custom-file-input" id="inputGroupFile02" style="display: none;" @change="inputHandler($event)">
                   <label class="custom-file-label" for="inputGroupFile02"><span class="glyphicon glyphicon-upload"></span> Choose file </label>
               </div>
           </a></li>
@@ -19,11 +19,11 @@
 <script>
 export default {
   name: "HomePage",
-  props: ["lon", "lat"],
+  props: ["lon", "lat", "username"],
   data() {
     return {
       file: undefined,
-      user: "dog",
+      
       /**
        * The Auth2 parameters, as seen on
        * https://developers.google.com/identity/sign-in/web/reference#gapiauth2initparams.
@@ -72,7 +72,7 @@ export default {
         //update user schema with new photo sub doc by passing in url parameters
         let url =
           "https://pic-app-client.herokuapp.com/users/" +
-          this.user +
+          this.username +
           `?url=${imageLink}&lon=${this.lon}&lat=${this.lat}`;
         console.log(url);
         var xhr = new XMLHttpRequest();

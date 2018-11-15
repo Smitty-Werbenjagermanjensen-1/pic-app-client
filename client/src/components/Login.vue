@@ -35,14 +35,40 @@
         methods: {
 		    //login trigger 
             login() {
+				var success = false;
 			    //check if username and password are empty
                 if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == "Randy" && this.input.password == "hello") {
-                        this.$emit("isLoggedIn", true);
-                        //this.$router.replace({ name: "secure" });
-                    } else {
-                        console.log("The username and / or password is incorrect"); //if incorrect username or password
-                    }
+					/* this'll do stuff */
+					var request = {
+								"username": "",
+								"password": ""
+					}
+					request.username = this.input.username;
+					request.password = this.input.password;
+					var url = "https://pic-app-client.herokuapp.com/users/auth";
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", url, true);
+					xhr.setRequestHeader("Content-Type", "application/json");
+					
+					xhr.onload = () => {
+						console.log("in onload for update image xmlhttpr");
+						if (xhr.readyState === xhr.DONE) {
+							if (xhr.status === 200) {
+								console.log("Success! Logging in...");
+								this.$emit("isLoggedIn", true);
+								this.$emit("username", this.input.username);
+							}
+							else if (xhr.status === 401)
+							{
+								alert("Incorrect username or password!");
+							}
+							else
+							{
+								alert("Something went wrong. Try again later.");
+							}
+						}
+					};
+					xhr.send(JSON.stringify(request));
                 } else {
                     console.log("A username and password must be present");//if no username or password input
                 }
@@ -50,6 +76,7 @@
             screenType() {
                 this.isLoginScreen = !this.isLoginScreen;
             },
+			//create an account
             createAccount() {
                 /* this'll do stuff */
 				var request = {
@@ -59,21 +86,25 @@
 				}
 				request.username = this.input.username;
 				request.password = this.input.password;
-				var url = "https://pic-app-client.herokuapp.com/users"
+				console.log(request);
+				var url = "https://pic-app-client.herokuapp.com/users/";
+				console.log(url);
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", url, true);
 				xhr.setRequestHeader("Content-Type", "application/json");
 				
 				xhr.onload = () => {
 				    console.log("in onload for update image xmlhttpr");
+					console.log(xhr.readyState);
 				    if (xhr.readyState === xhr.DONE) {
+						console.log(xhr.responseText);
 						if (xhr.status === 200) {
 							alert("user was created");
 							this.isLoginScreen = true;
 						}
 					}
 				};
-				xhr.send(request);
+				xhr.send(JSON.stringify(request));
             }
         }
     }
