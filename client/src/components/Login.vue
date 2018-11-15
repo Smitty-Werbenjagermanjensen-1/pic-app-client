@@ -1,11 +1,22 @@
 <template>
-    <div id="login">
-        <h1>Login</h1>
-        <h4>or</h4>
-        <button id="prettyButton" type="button" v-on:click="createAccount()">create an account</button>
-        <input type="text" name="username" v-model="input.username" placeholder="Username" />
-        <input type="password" name="password" v-model="input.password" placeholder="Password" />
-        <button type="button" v-on:click="login()">Login</button>
+    <div>
+        <h1>PicMap</h1>
+        <div id="login" v-if="isLoginScreen">
+            <h3>Login</h3>
+                or
+                <button id="prettyButton" type="button" v-on:click="screenType()">create an account.</button><br><br>
+            <input type="text" name="username" v-model="input.username" placeholder="Username" />
+            <input type="password" name="password" v-model="input.password" placeholder="Password" />
+            <button type="button" v-on:click="login()">Login</button>
+        </div>
+        <div id="login" v-else>
+            <h3>Create Account</h3>
+                or
+                <button id="prettyButton" type="button" v-on:click="screenType()">login.</button><br><br>
+            <input type="text" name="username" v-model="input.username" placeholder="Username" />
+            <input type="password" name="password" v-model="input.password" placeholder="Password" />
+            <button type="button" v-on:click="createAccount()">Create Account</button>
+        </div>
     </div>
 </template>
 
@@ -14,6 +25,7 @@
         name: 'HomePage',
         data() {
             return {
+                isLoginScreen: true,
                 input: {
                     username: "",
                     password: ""
@@ -33,24 +45,47 @@
                     console.log("A username and password must be present");
                 }
             },
+            screenType() {
+                this.isLoginScreen = !this.isLoginScreen;
+            },
             createAccount() {
-
+                /* this'll do stuff */
             }
         }
     }
 </script>
 
 <style scoped>
+    h3 {
+        margin-top:0px!important;
+    }
+
+    h1 {
+        text-align: center;
+        margin: auto;
+        margin-top: 5%;
+        font-size: 100px;
+        color: #FFFFFF;
+    }
+
     #login {
         width: 500px;
         border: 1px solid #CCCCCC;
         background-color: #FFFFFF;
         margin: auto;
-        margin-top: 200px;
+        margin-top: 5%;
         padding: 20px;
     }
 
     #prettyButton {
         /* Make this look like a hyperlink */
+        background:none!important;
+        color:inherit;
+        border:none; 
+        padding:0!important;
+        font: inherit;
+        /*border is optional*/
+        border-bottom:1px solid #444; 
+        cursor: pointer;
     }
 </style>
