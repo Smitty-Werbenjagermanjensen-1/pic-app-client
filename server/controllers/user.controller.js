@@ -3,6 +3,36 @@
 var mongoose = require('mongoose'),
     User = require('../models/User.js');
 
+/*
+  Middleware: find a user by its ID, then pass it to the next request handler.
+
+  Find the user using a mongoose query,
+        bind it to the request object as the property 'user',
+        then finally call next
+ */
+exports.userByID = function(req, res, next, id) {
+  User.findById(id).exec(function(err, user) {
+    if(err) {
+      res.status(400).send(err);
+    } else {
+      req.user = user;
+      next();
+    }
+  });
+};
+
+exports.userByUser = function(req, res, next, user) {
+  console.log(req.query);
+    User.find({ 'username' : user }).exec(function(err, user) {
+      if(err) {
+        res.status(400).send(err);
+      } else {
+        req.body = user;
+        next();
+      }
+    });
+  };
+
 /* Create a user */
 exports.create = function(req, res) {
 
@@ -14,7 +44,7 @@ exports.create = function(req, res) {
     if(err) {
       res.status(400).send(err);
     } else {
-      res.json(user);
+      res.status(200).send(user);
     }
   });
 };
@@ -99,33 +129,3 @@ exports.list = function(req, res) {
   });
 
 };
-
-/*
-  Middleware: find a user by its ID, then pass it to the next request handler.
-
-  Find the user using a mongoose query,
-        bind it to the request object as the property 'user',
-        then finally call next
- */
-exports.userByID = function(req, res, next, id) {
-  User.findById(id).exec(function(err, user) {
-    if(err) {
-      res.status(400).send(err);
-    } else {
-      req.user = user;
-      next();
-    }
-  });
-};
-
-exports.userByUser = function(req, res, next, user) {
-  console.log(req.query);
-    User.find({ 'username' : user }).exec(function(err, user) {
-      if(err) {
-        res.status(400).send(err);
-      } else {
-        req.body = user;
-        next();
-      }
-    });
-  };

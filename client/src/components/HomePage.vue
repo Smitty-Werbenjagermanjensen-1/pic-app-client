@@ -2,7 +2,7 @@
   <div class="map">
     
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" @addedmarker="addedMarker"></CustomNav>
+      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" @addedmarker="addedMarker" @logOut="logOut"></CustomNav>
     
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
@@ -28,8 +28,9 @@ export default {
   name: 'HomePage',
   data () {
     return {
+      username: "",
       isLoggedIn: false,
-      users : [],
+      users: [],
       lon: undefined,
       lat: undefined,
       map: undefined
@@ -39,7 +40,11 @@ export default {
     Mapbox, CustomNav, Login
   },
   methods: {
-
+    logOut () {
+      /* Maybe back-end stuff */
+      console.log("Hello?");
+      this.isLoggedIn = false;
+    },
     //Asynch fetch to get users from database
     async loadmap (map) {
       //clear map before drawing all markers
