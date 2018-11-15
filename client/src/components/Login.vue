@@ -33,16 +33,18 @@
             }
         },
         methods: {
+		    //login trigger 
             login() {
+			    //check if username and password are empty
                 if(this.input.username != "" && this.input.password != "") {
                     if(this.input.username == "Randy" && this.input.password == "hello") {
                         this.$emit("isLoggedIn", true);
                         //this.$router.replace({ name: "secure" });
                     } else {
-                        console.log("The username and / or password is incorrect");
+                        console.log("The username and / or password is incorrect"); //if incorrect username or password
                     }
                 } else {
-                    console.log("A username and password must be present");
+                    console.log("A username and password must be present");//if no username or password input
                 }
             },
             screenType() {

@@ -58,10 +58,11 @@ export default {
           if (xhr.readyState === xhr.DONE) {
               if (xhr.status === 200) {
                   console.log(xhr.response);
-                  this.users = xhr.response;
-
+                  this.users = xhr.response;//get user data
+                  // loop all user
                   this.users.forEach(user => {
                     user.photos.forEach(photo => {
+					    // loop all photos for one user
                         console.log(photo.url);
 
                         var el = document.createElement('div').classList.add('marker');
@@ -95,12 +96,13 @@ export default {
       console.log("Map: ")
       console.log(map);
       },
-
+    //reset the map
     resetStyle() {
       console.log("zoom event finished, we need to reset the style as it gets messed up");
       console.log(this.map);
     },
-
+	
+    //map click triggers, get location
     mapClicked(map, e) {
       //alert(e.lngLat.toArray());
       this.lon= e.lngLat.toArray()[0];
