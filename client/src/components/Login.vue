@@ -52,6 +52,28 @@
             },
             createAccount() {
                 /* this'll do stuff */
+				var request = {
+							"username": "",
+							"password": "",
+							"photos": []
+				}
+				request.username = this.input.username;
+				request.password = this.input.password;
+				var url = "https://pic-app-client.herokuapp.com/users"
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				
+				xhr.onload = () => {
+				    console.log("in onload for update image xmlhttpr");
+				    if (xhr.readyState === xhr.DONE) {
+						if (xhr.status === 200) {
+							alert("user was created");
+							this.isLoginScreen = true;
+						}
+					}
+				};
+				xhr.send(request);
             }
         }
     }
