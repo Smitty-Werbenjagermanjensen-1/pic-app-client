@@ -2,7 +2,7 @@
   <div class="map">
     
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" @addedmarker="addedMarker" @logOut="logOut"></CustomNav>
+      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" :username="username" @addedmarker="addedMarker" @logOut="logOut"></CustomNav>
     
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
@@ -16,7 +16,7 @@
         ref="map">
       </mapbox>
     </div>
-    <Login v-else @isLoggedIn="login"></Login>
+    <Login v-else @isLoggedIn="login" @username="setUser"></Login>
   </div>
 </template>
 
@@ -45,6 +45,10 @@ export default {
       console.log("Hello?");
       this.isLoggedIn = false;
     },
+	setUser(name) {
+		this.username = name;
+		console.log("username", this.username);
+	},
     //Asynch fetch to get users from database
     async loadmap (map) {
       //clear map before drawing all markers
@@ -52,16 +56,15 @@ export default {
 
       //open xmlhttp request
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://pic-app-client.herokuapp.com/users/', true);
+      xhr.open('GET', 'https://pic-app-client.herokuapp.com/users/' + this.username, true);
       xhr.responseType = 'json';
       xhr.onload = function () {
           if (xhr.readyState === xhr.DONE) {
               if (xhr.status === 200) {
-                  console.log(xhr.response);
-                  this.users = xhr.response;//get user data
-                  // loop all user
-                  this.users.forEach(user => {
-                    user.photos.forEach(photo => {
+
+                  let response = xhr.response;//get user data
+                  console.log("xhr", response);
+                    response[0].photos.forEach(photo => {
 					    // loop all photos for one user
                         console.log(photo.url);
 
@@ -70,7 +73,7 @@ export default {
                         // make a marker for each feature and add to the map
                         new mapboxgl.Marker(el).setLngLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
                     });
-                  });
+                  
               }
           }
       };

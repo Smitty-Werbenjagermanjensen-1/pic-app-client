@@ -16,7 +16,8 @@ router.route('/delete/:userId').delete(users.deleteUser);
 router.route('/:username')
   .get(users.read)
   .put(users.updateAddPhoto);
-
+  
+router.route('/auth').post(users.authenticate);
 
 
 
