@@ -42,6 +42,7 @@ exports.create = function(req, res) {
   /* Then save the user */
   user.save(function(err) {
     if(err) {
+	  console.log("hello; " + err);
       res.status(400).send(err);
     } else {
       res.status(200).send(user);
