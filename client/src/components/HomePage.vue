@@ -156,9 +156,8 @@ export default {
 <style scoped>
 
 el {
-  width: 24em;
-  height: 24em;
-  padding: 2.8em;
+  width: 100px;
+  height: 100px;
   border: dashed 1px;
 }
 
