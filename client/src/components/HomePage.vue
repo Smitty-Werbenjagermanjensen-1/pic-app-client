@@ -162,7 +162,6 @@ el {
   width: 24em;
   height: 24em;
   padding: 2.8em;
-  /*2.8em = 2em*1.4 (2em = half the width of a link with img, 1.4 = sqrt(2))*/
   border: dashed 1px;
   border-radius: 50%;
   margin: 1.75em auto 0;
@@ -180,8 +179,8 @@ a {
 .marker {
   background-image: url('https://raw.githubusercontent.com/RandyOram/RandyOram.github.io/master/PicApp/mapbox-icon.png');
   background-size: cover;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   cursor: pointer;
 }
