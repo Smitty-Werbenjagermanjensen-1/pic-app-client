@@ -156,7 +156,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-<!-- 
 el {
   background-color: 'turquoise'
   position: relative;
@@ -167,7 +166,6 @@ el {
   border-radius: 50%;
   margin: 1.75em auto 0;
 }
--->
 
 a {
   color: #42b983;
