@@ -71,7 +71,7 @@ export default {
                         var el = document.createElement('div').classList.add('marker');
 
                         // make a marker for each feature and add to the map
-                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="168" width="168">`)).addTo(map);
+                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
                     });
                   
               }
@@ -181,8 +181,8 @@ a {
 .marker {
   background-image: url('https://raw.githubusercontent.com/RandyOram/RandyOram.github.io/master/PicApp/mapbox-icon.png');
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   cursor: pointer;
 }
