@@ -156,7 +156,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-el: {
+el {
   background-color: 'turquoise'
   position: relative;
   width: 24em;
