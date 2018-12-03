@@ -72,7 +72,6 @@ export default {
 
                         // make a marker for each feature and add to the map
                         new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
-                        <div v-bind:style="el"></div>
                     });
                   
               }
@@ -157,8 +156,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-data: {
- el: {
+el: {
   background-color: 'turquoise'
   position: relative;
   width: 24em;
@@ -168,7 +166,6 @@ data: {
   border: dashed 1px;
   border-radius: 50%;
   margin: 1.75em auto 0;
- }
 }
 
 a {
