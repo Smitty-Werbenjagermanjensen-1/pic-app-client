@@ -72,7 +72,7 @@ export default {
 
                         // make a marker for each feature and add to the map
                         new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="200" width="200">`)).addTo(map);
-                        <div v-bind:style="el"></div>
+                        //<div v-bind:style="el"></div>
                     });
                   
               }
