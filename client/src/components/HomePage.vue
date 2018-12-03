@@ -181,8 +181,8 @@ a {
 .marker {
   background-image: url('https://raw.githubusercontent.com/RandyOram/RandyOram.github.io/master/PicApp/mapbox-icon.png');
   background-size: cover;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   cursor: pointer;
 }
