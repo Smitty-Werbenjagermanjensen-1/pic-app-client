@@ -71,7 +71,7 @@ export default {
                         var el = document.createElement('div').classList.add('marker');
 
                         // make a marker for each feature and add to the map
-                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
+                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 50 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
                     });
                   
               }
