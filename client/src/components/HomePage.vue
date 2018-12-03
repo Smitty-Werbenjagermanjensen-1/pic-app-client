@@ -71,7 +71,7 @@ export default {
                         var el = document.createElement('div').classList.add('marker');
 
                         // make a marker for each feature and add to the map
-                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="200" width="200">`)).addTo(map);
+                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
                         //<div v-bind:style="el"></div>
                     });
                   
@@ -159,6 +159,15 @@ export default {
 
 data: {
  el: {
+  background-color: 'turquoise'
+  position: relative;
+  width: 24em;
+  height: 24em;
+  padding: 2.8em;
+  /*2.8em = 2em*1.4 (2em = half the width of a link with img, 1.4 = sqrt(2))*/
+  border: dashed 1px;
+  border-radius: 50%;
+  margin: 1.75em auto 0;
  }
 }
 
