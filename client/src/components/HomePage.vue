@@ -72,8 +72,7 @@ export default {
 
                         // make a marker for each feature and add to the map
                         new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 50 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
-                    });
-                  
+                    });                  
               }
           }
       };
@@ -157,14 +156,10 @@ export default {
 <style scoped>
 
 el {
-  background-color: 'turquoise'
-  position: relative;
   width: 24em;
   height: 24em;
   padding: 2.8em;
   border: dashed 1px;
-  border-radius: 50%;
-  margin: 1.75em auto 0;
 }
 
 a {
