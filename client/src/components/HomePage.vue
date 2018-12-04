@@ -2,8 +2,8 @@
   <div class="map">
 
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" :username="username" @addedmarker="addedMarker" @logOut="logOut"></CustomNav>
-
+      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" :username="username" @addedmarker="addedMarker" @addFile="showModal = true" @logOut="logOut"></CustomNav>
+      <Modal v-if="showModal" @close="showModal = false"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
         :map-options="{
@@ -24,6 +24,7 @@
 import Mapbox from 'mapbox-gl-vue'
 import CustomNav from './CustomNav.vue'
 import Login from './Login.vue'
+import Modal from './Modal.vue'
 export default {
   name: 'HomePage',
   data () {
@@ -33,11 +34,12 @@ export default {
       users: [],
       lon: undefined,
       lat: undefined,
-      map: undefined
+      map: undefined,
+      showModal: true
     }
   },
   components: {
-    Mapbox, CustomNav, Login
+    Mapbox, CustomNav, Login, Modal
   },
   methods: {
     logOut () {
@@ -184,7 +186,7 @@ img {
   width: 100px;
   height: 100px;
   border-style: dotted;
-}  
+}
 
 a {
   color: #42b983;
