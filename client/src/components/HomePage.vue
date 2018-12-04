@@ -2,8 +2,8 @@
   <div class="map">
 
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" :username="username" @addedmarker="addedMarker" @addFile="showModal = true" @logOut="logOut"></CustomNav>
-      <Modal v-if="showModal" @close="showModal = false"></Modal>
+      <CustomNav v-if="isLoggedIn" :username="username" @clickLabel="showModal = true" @logOut="logOut"></CustomNav>
+      <Modal v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @test="test" @close="addedMarker"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
         :map-options="{
@@ -35,7 +35,7 @@ export default {
       lon: undefined,
       lat: undefined,
       map: undefined,
-      showModal: true
+      showModal: false
     }
   },
   components: {
@@ -47,6 +47,9 @@ export default {
       console.log("Hello?");
       this.isLoggedIn = false;
     },
+    test() {
+      console.log("You added a marker");
+    },
 	setUser(name) {
 		this.username = name;
 		console.log("username", this.username);
@@ -56,6 +59,8 @@ export default {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           console.log("position:", position.coords);
+          this.lon = position.coords.longitude;
+          this.lat = position.coords.latitude;
           map.flyTo({
               center: [
                   position.coords.longitude, position.coords.latitude
@@ -112,6 +117,7 @@ export default {
     },
 
     addedMarker() {
+      this.showModal = false;
       console.log("heard the addedMarker event from nav, passing it to root so that child (map) can hear it");
       this.loadmap(this.map);
     },
@@ -125,10 +131,9 @@ export default {
       console.log("Map: ")
       console.log(map);
       },
-    //reset the map
+    //called on zoom event the map
     resetStyle() {
-      console.log("zoom event finished, we need to reset the style as it gets messed up");
-      console.log(this.map);
+
     },
 
     //map click triggers, get location

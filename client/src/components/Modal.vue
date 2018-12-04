@@ -8,20 +8,22 @@
 
               <div class="modal-header">
                 <slot name="header">
-                  default header
+                  Add a location
                 </slot>
               </div>
 
               <div class="modal-body">
                 <slot name="body">
-                  default body
+                  <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" @change="checkValidation()">
+                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude"  @change="checkValidation()">
+                  <input type="file" class="custom-file-input" id="inputGroupFile02" :disabled="validated == 1" @change="inputHandler($event)">
                 </slot>
               </div>
 
               <div class="modal-footer">
                 <slot name="footer">
-                  default footer
-                  <button class="modal-default-button" @click="$emit('close')">
+
+                  <button v-if="lon != 0 && lat != 0" class="modal-default-button" @click="submitForm()">
                     OK
                   </button>
                 </slot>
@@ -39,16 +41,106 @@ export default {
 
   data() {
     return {
-
+      file: undefined,
+      validated: false,
     };
   },
+  props: ["lon", "lat", "username"],
   methods: {
 
+    checkValidation() {
+      if(this.lon != 0 && this.lat != 0) {
+        this.validated = true;
+      }
+      else {
+        this.validated = false;
+      }
+    },
+
+    submitForm() {
+      this.$emit('close', this.lon, this.lat);
+      this.requestImage(this.file);
+
+    },
+
+    async requestImage(file) {
+      let callback = this.sendReadySignal;
+      console.log("Orange!");
+      console.log(file);
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        if (req.readyState == 4 && req.status == 200) {
+          this.processRequest(req.responseText, callback);
+          console.log("BLUE: " + req.responseText);
+        }
+      };
+      var request_url = "https://api.imgur.com/3/image";
+      var api_key = "bf6ae890fb73e6b";
+      req.open("POST", request_url, true); // true for asynchronous
+      req.setRequestHeader("Authorization", "Client-ID " + api_key);
+      req.send(file);
+      console.log("White!");
+    },
+
+    processRequest(response_text, callback) {
+
+      if (response_text == "Not found") {
+        console.log("Imgur album not found.");
+      } else {
+        //Response is here
+        var json = JSON.parse(response_text);
+        let imageLink = json.data.link;
+        console.log(imageLink);
+
+        //update user schema with new photo sub doc by passing in url parameters
+        let url =
+          "https://pic-app-client.herokuapp.com/users/" +
+          this.username +
+          `?url=${imageLink}&lon=${this.lon}&lat=${this.lat}`;
+        console.log(url);
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", url, true);
+        xhr.responseType = "text";
+        console.log("Request about to onload");
+        xhr.onload = () => {
+          console.log("in onload for update image xmlhttpr");
+          if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+              console.log("trying to add marker to map after image upload");
+              console.log("new content");
+              /*  this.users = xhr.response;
+                  let photo = this.users.photos[this.users.photos.length-1];
+                  var el = document.createElement('div').classList.add('marker');
+                  new mapboxgl.Marker(el).setLngLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map); */
+              //Emit event to reload map
+              callback();
+            }
+          }
+        };
+        xhr.send(null);
+      }
+    },
+    sendReadySignal() {
+      console.log("Firing ready signals");
+      this.$emit("addedmarker");
+      this.$emit('test');
+    },
+
+    inputHandler(event) {
+      //Handle image upload here
+      this.file = event.target.files[0];
+      console.log("File has been changed");
+
+    }
+
+  },
+  mounted: function() {
+    this.lati = this.lat;
+    this.long = this.lon;
   }
 };
 
-components: {
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
