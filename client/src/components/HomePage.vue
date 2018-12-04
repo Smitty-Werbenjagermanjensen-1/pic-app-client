@@ -92,8 +92,10 @@ export default {
                         var el = document.createElement('div').classList.add('marker');
 
                         // make a marker for each feature and add to the map
+
                         new mapboxgl.Marker(el).setLngLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
                     });
+
 
               }
           }
@@ -177,6 +179,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+img {
+  width: 100px;
+  height: 100px;
+  border-style: dotted;
+}  
 
 a {
   color: #42b983;
