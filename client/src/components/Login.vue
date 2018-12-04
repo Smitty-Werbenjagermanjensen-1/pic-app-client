@@ -6,7 +6,7 @@
                 or
                 <button id="prettyButton" type="button" v-on:click="screenType()">create an account.</button><br><br>
             <input type="text" name="username" v-model="input.username" placeholder="Username" />
-            <input type="password" name="password" v-model="input.password" placeholder="Password" />
+            <input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="login()"/>
             <button type="button" v-on:click="login()">Login</button>
         </div>
         <div id="login" v-else>
@@ -14,7 +14,7 @@
                 or
                 <button id="prettyButton" type="button" v-on:click="screenType()">login.</button><br><br>
             <input type="text" name="username" v-model="input.username" placeholder="Username" />
-            <input type="password" name="password" v-model="input.password" placeholder="Password" />
+            <input type="password" name="password" v-model="input.password" placeholder="Password" @keyup.enter="createAccount()"/>
             <button type="button" v-on:click="createAccount()">Create Account</button>
         </div>
     </div>
@@ -33,7 +33,7 @@
             }
         },
         methods: {
-		    //login trigger 
+		    //login trigger
             login() {
 				var success = false;
 			    //check if username and password are empty
@@ -49,7 +49,7 @@
 					var xhr = new XMLHttpRequest();
 					xhr.open("POST", url, true);
 					xhr.setRequestHeader("Content-Type", "application/json");
-					
+
 					xhr.onload = () => {
 						console.log("in onload for update image xmlhttpr");
 						if (xhr.readyState === xhr.DONE) {
@@ -92,7 +92,7 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", url, true);
 				xhr.setRequestHeader("Content-Type", "application/json");
-				
+
 				xhr.onload = () => {
 				    console.log("in onload for update image xmlhttpr");
 					console.log(xhr.readyState);
@@ -136,11 +136,11 @@
         /* Make this look like a hyperlink */
         background:none!important;
         color:inherit;
-        border:none; 
+        border:none;
         padding:0!important;
         font: inherit;
         /*border is optional*/
-        border-bottom:1px solid #444; 
+        border-bottom:1px solid #444;
         cursor: pointer;
     }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="map">
-    
+
     <div v-if="isLoggedIn">
       <CustomNav v-if="isLoggedIn" :lon="lon" :lat="lat" :username="username" @addedmarker="addedMarker" @logOut="logOut"></CustomNav>
-    
+
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
         :map-options="{
@@ -48,7 +48,28 @@ export default {
 	setUser(name) {
 		this.username = name;
 		console.log("username", this.username);
-	},
+  },
+  getUserLocation(map) {
+    console.log("In getting user location");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          console.log("position:", position.coords);
+          map.flyTo({
+              center: [
+                  position.coords.longitude, position.coords.latitude
+                  ],
+              zoom: 11,
+              bearing: 0,
+
+              // These options control the flight curve, making it move
+              // slowly and zoom out almost completely before starting
+              // to pan.
+              speed: 1, // make the flying slow
+              curve: 1,
+          });
+        });
+     }
+  },
     //Asynch fetch to get users from database
     async loadmap (map) {
       //clear map before drawing all markers
@@ -71,8 +92,11 @@ export default {
                         var el = document.createElement('div').classList.add('marker');
 
                         // make a marker for each feature and add to the map
-                        new mapboxgl.Marker(el).setLngfLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 50 }).setHTML(`<img class = "img" src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
-                    });                  
+
+                        new mapboxgl.Marker(el).setLngLat([photo.coordinates.longitude, photo.coordinates.latitude]).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<img src=${photo.url} alt="" height="84" width="84">`)).addTo(map);
+                    });
+
+
               }
           }
       };
@@ -92,6 +116,7 @@ export default {
 
     //Actual event that triggers on map load
     mapLoaded (map) {
+      this.getUserLocation(map);
       this.map = map;
       //Don't do anything on map load since ajax request is too slow
       this.loadmap(map);
@@ -103,7 +128,7 @@ export default {
       console.log("zoom event finished, we need to reset the style as it gets messed up");
       console.log(this.map);
     },
-	
+
     //map click triggers, get location
     mapClicked(map, e) {
       //alert(e.lngLat.toArray());
