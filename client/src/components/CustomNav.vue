@@ -7,12 +7,12 @@
       <ul class="nav navbar-nav navbar-right">
           <li v-if="contextName == 'home'"><a>
               <div @click="goToProfile">
-                  <label>Profile</label>
+                  <label><span class="glyphicon glyphicon-user"></span> Profile</label>
               </div>
           </a></li>
           <li v-if="contextName == 'profile'"><a>
               <div @click="goToMap">
-                  <label>Go to Map</label>
+                  <label><span class="glyphicon glyphicon-map-marker"></span> Map</label>
               </div>
           </a></li>
           <li v-if="contextName == 'home'"><a >
@@ -20,7 +20,7 @@
                   <label><span class="glyphicon glyphicon-upload"></span> Choose file</label>
               </div>
           </a></li>
-          <li><a href="#" @click="signOut"><label><span class="glyphicon glyphicon-user"></span> Sign Out</label></a></li>
+          <li><a href="#" @click="signOut"><label><span class="glyphicon glyphicon-log-out"></span> Sign Out</label></a></li>
       </ul>
     </div>
   </nav>
@@ -53,11 +53,12 @@ export default {
     },
     goToMap() {
       console.log("going to ", this.contextName)
-      this.$router.push({ path: `/`});
+      this.$router.push({ path: `/home/${this.username}`});
     },
     signOut() {
       console.log("ORANGE");
-      this.$emit("logOut");
+      this.$emit('logout');
+      this.$router.push({ path: `/`});
     },
     emitEvent() {
       console.log("attempting to emit popup");

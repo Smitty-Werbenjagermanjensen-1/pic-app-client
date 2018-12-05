@@ -1,6 +1,6 @@
 <template>
 <div>
-  <CustomNav :username="username" @logOut="logOut" contextName="profile"></CustomNav>
+  <CustomNav :username="username" @logout="logOut" contextName="profile"></CustomNav>
   <h1>{{this.username}}</h1>
   <div id="photoList" >
     <img v-for="(photo,index) in photos" :key="index" :src="photo.url" style="width: 50px; height: 50px;" />
@@ -21,11 +21,18 @@ import CustomNav from './CustomNav.vue'
 
       }
     },
-    props: ['username'],
+    props: ['username', 'userExists'],
     components: {
       CustomNav
     },
     methods: {
+
+       logOut () {
+        this.$emit('login', false);
+       },
+
+
+
 
       getUserById: function (userId) {
         console.log("userid:", userId);

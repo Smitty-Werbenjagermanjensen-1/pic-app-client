@@ -58,8 +58,10 @@ export default {
     },
 
     submitForm() {
-      this.$emit('close', this.lon, this.lat);
-      this.requestImage(this.file);
+
+      this.requestImage(this.file).then(() => {
+        this.$emit('close', this.lon, this.lat);
+      });
 
     },
 

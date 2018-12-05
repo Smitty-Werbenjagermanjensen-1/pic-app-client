@@ -2,7 +2,7 @@
   <div class="map">
 
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="showModal = true" @logOut="logOut"></CustomNav>
+      <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="showModal = true" @logout="logOut"></CustomNav>
       <Modal v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @test="test" @close="addedMarker"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
@@ -16,7 +16,6 @@
         ref="map">
       </mapbox>
     </div>
-    <Login v-else @isLoggedIn="login" @username="setUser"></Login>
   </div>
 </template>
 
@@ -35,16 +34,18 @@ export default {
       lon: undefined,
       lat: undefined,
       map: undefined,
+      params: "",
       showModal: false
     }
   },
   components: {
     Mapbox, CustomNav, Login, Modal
   },
+  props: ['userExists'],
   methods: {
     logOut () {
-      /* Maybe back-end stuff */
-      console.log("Hello?");
+
+      this.$emit('login', false);
       this.isLoggedIn = false;
     },
     test() {
@@ -52,6 +53,7 @@ export default {
     },
 	setUser(name) {
     this.username = name;
+    this.isLoggedIn = true;
 		console.log("username", this.username);
   },
   getUserLocation(map) {
@@ -190,7 +192,31 @@ export default {
     }
 
 
-  }
+  },
+  created: function() {
+      console.log("this.params:", this.params);
+      this.params =  this.$route.params.username;
+      this.setUser(this.params);
+    },
+    watch: {
+      '$route': function (username) {
+        //console.log("In watched for param: ", username);
+        this.params = username;
+        console.log(username);
+        this.setUser(this.params);
+
+      }
+    },
+    beforeRouteUpdate (to, from, next) {
+      if(to.params) {
+          const userId = to.params.username;
+          console.log(userId);
+          //console.log("BeforeRouteUpdate:", to.params.username);
+          this.params = userId;
+          next();
+
+      }
+    },
 }
 </script>
 
