@@ -3,7 +3,7 @@
 
     <div v-if="isLoggedIn">
       <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="labelClick" @logout="logOut"></CustomNav>
-      <Modal :notReady="notReady" v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @close="hideModal"></Modal>
+      <Modal :notReady="notReady" :uploading="uploading" v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @close="hideModal"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
         :map-options="{
@@ -36,7 +36,8 @@ export default {
       map: undefined,
       params: "",
       showModal: false,
-      notReady: true
+      notReady: true,
+      uploading: false,
     }
   },
   components: {

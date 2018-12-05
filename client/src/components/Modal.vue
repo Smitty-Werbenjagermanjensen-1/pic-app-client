@@ -28,6 +28,9 @@
                   <button :disabled="notReady == 1" v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
                     OK
                   </button>
+                  <button :disabled="uploading == 1" v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
+                    Back
+                  </button>
                 </slot>
               </div>
             </div>
@@ -47,7 +50,7 @@ export default {
       validated: false,
     };
   },
-  props: ["lon", "lat", "username", "notReady"],
+  props: ["lon", "lat", "username", "notReady", "uploading"],
   methods: {
 
     checkValidation() {
@@ -60,7 +63,7 @@ export default {
     },
 
     submitForm() {
-
+      this.uploading = true;
       this.requestImage(this.file);
 
     },
@@ -125,6 +128,7 @@ export default {
     sendReadySignal() {
       console.log("Firing ready signals");
       this.notReady = false;
+      this.uploading = false;
       this.$emit("addedmarker");
       this.$emit('test');
     },
