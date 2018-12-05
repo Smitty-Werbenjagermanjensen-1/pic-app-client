@@ -14,21 +14,21 @@
 
               <div class="modal-body">
                 <slot name="body">
-                  <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" @change="checkValidation()">
-                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude"  @change="checkValidation()">
+                  <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" v-on:blur="checkValidation()">
+                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude"  v-on:blur="checkValidation()">
                   <br>
-                  <input type="file" class="custom-file-input" id="inputGroupFile02" :disabled="validated == 1" @change="inputHandler($event)">
-                  <button @click="submitForm()">Upload Photo</button>
+                  <input type="file" class="custom-file-input" id="inputGroupFile02" @change="inputHandler($event)">
+                  <button :disabled="hasFile == 0 || validated == 0" @click="submitForm()">Upload Photo</button>
                 </slot>
               </div>
 
               <div class="modal-footer">
                 <slot name="footer">
 
-                  <button :disabled="notReady == 1" v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
+                  <button :disabled="notReady == 1" class="modal-default-button" @click="$emit('close')">
                     OK
                   </button>
-                  <button :disabled="uploading == 1" v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
+                  <button :disabled="uploading == 1" class="modal-default-button" @click="$emit('close')">
                     Back
                   </button>
                 </slot>
@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       file: undefined,
+      hasFile: false,
       validated: false,
     };
   },
@@ -54,6 +55,8 @@ export default {
   methods: {
 
     checkValidation() {
+      console.log("on blur");
+      console.log(this.lon + " " + this.lat);
       if(this.lon != 0 && this.lat != 0) {
         this.validated = true;
       }
@@ -127,6 +130,7 @@ export default {
     },
     sendReadySignal() {
       console.log("Firing ready signals");
+      this.hasFile = false;
       this.notReady = false;
       this.uploading = false;
       this.$emit("addedmarker");
@@ -135,6 +139,7 @@ export default {
 
     inputHandler(event) {
       //Handle image upload here
+      this.hasFile = true;
       this.file = event.target.files[0];
       console.log("File has been changed");
 
@@ -144,6 +149,7 @@ export default {
   mounted: function() {
     this.lati = this.lat;
     this.long = this.lon;
+    this.checkValidation();
   }
 };
 
