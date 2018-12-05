@@ -3,7 +3,7 @@
   <CustomNav :username="username" @logout="logOut" contextName="profile"></CustomNav>
   <h1>{{this.username}}</h1>
   <div id="photoList" >
-    <img v-for="(photo,index) in photos" :key="index" :src="photo.url" style="width: 50px; height: 50px;" />
+    <img v-for="(photo,index) in photos" :key="index" :src="photo.url" style="width: 200px; height: 200px; margin: 5px; border: solid black 3px" />
   </div>
 </div>
 
