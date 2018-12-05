@@ -2,7 +2,7 @@
   <div class="map">
 
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :username="username" @clickLabel="showModal = true" @logOut="logOut"></CustomNav>
+      <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="showModal = true" @logOut="logOut"></CustomNav>
       <Modal v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @test="test" @close="addedMarker"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
@@ -51,7 +51,7 @@ export default {
       console.log("You added a marker");
     },
 	setUser(name) {
-		this.username = name;
+    this.username = name;
 		console.log("username", this.username);
   },
   getUserLocation(map) {
@@ -141,7 +141,17 @@ export default {
       //alert(e.lngLat.toArray());
       this.lon= e.lngLat.toArray()[0];
       this.lat= e.lngLat.toArray()[1];
+      var parent = document.getElementById('mapboxgl-canvas-container');
       console.log(this.lon + ", " + this.lat);
+      document.getElementsByClassName('markerTemp').forEach((elem)=> {
+        elem.parentNode.removeChild(elem);
+      });
+
+      var el = document.createElement('div').classList.add('markerTemp');
+
+      // make a marker for temporary mouse click
+
+      new mapboxgl.Marker(el).setLngLat([this.lon, this.lat]).addTo(map);
     },
 
     // The xmlhttp request to host the image on imgur
@@ -204,6 +214,15 @@ a {
 
 .marker {
   background-image: url('https://raw.githubusercontent.com/RandyOram/RandyOram.github.io/master/PicApp/mapbox-icon.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerTemp {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWvsMICo99YY4etMekY3q91PxSD1dQMd5cMDdvmCCc7vcfYiq9');
   background-size: cover;
   width: 50px;
   height: 50px;

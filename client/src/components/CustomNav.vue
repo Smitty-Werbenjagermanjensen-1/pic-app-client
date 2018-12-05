@@ -5,12 +5,22 @@
         <a class="navbar-brand" href="#">PicMap</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-          <li><a >
-              <div @click="emitEvent()">
+          <li v-if="contextName == 'home'"><a>
+              <div @click="goToProfile">
+                  <label>Profile</label>
+              </div>
+          </a></li>
+          <li v-if="contextName == 'profile'"><a>
+              <div @click="goToMap">
+                  <label>Go to Map</label>
+              </div>
+          </a></li>
+          <li v-if="contextName == 'home'"><a >
+              <div @click="emitEvent">
                   <label><span class="glyphicon glyphicon-upload"></span> Choose file</label>
               </div>
           </a></li>
-          <li><a href="#" @click="signOut()"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+          <li><a href="#" @click="signOut"><label><span class="glyphicon glyphicon-user"></span> Sign Out</label></a></li>
       </ul>
     </div>
   </nav>
@@ -18,7 +28,7 @@
 <script>
 export default {
   name: "HomePage",
-  props: ["username"],
+  props: ["username", "contextName"],
   data() {
     return {
 
@@ -37,6 +47,14 @@ export default {
     };
   },
   methods: {
+    goToProfile() {
+      console.log("going to ", this.contextName)
+      this.$router.push({ path: `/profile/${this.username}`});
+    },
+    goToMap() {
+      console.log("going to ", this.contextName)
+      this.$router.push({ path: `/`});
+    },
     signOut() {
       console.log("ORANGE");
       this.$emit("logOut");
@@ -47,6 +65,9 @@ export default {
     }
 
 
+  },
+  mounted: function() {
+    console.log("username:", this.username);
   }
 };
 
