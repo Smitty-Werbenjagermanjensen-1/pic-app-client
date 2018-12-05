@@ -8,16 +8,16 @@
 
               <div class="modal-header">
                 <slot name="header">
-                  Add a location
+                  Add a photo
                 </slot>
               </div>
 
               <div class="modal-body">
                 <slot name="body">
                   <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" v-on:keyup="checkValidation()" v-on:blur="checkValidation()">
-                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude" v-on:keyup="checkValidation()" v-on:blur="checkValidation()">
+                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude" v-on:keyup="checkValidation()" style="margin: 5px; margin-left: 0px;" v-on:blur="checkValidation()">
                   <br>
-                  <input type="file" class="custom-file-input" id="inputGroupFile02" @change="inputHandler($event)">
+                  <input type="file" class="custom-file-input" id="inputGroupFile02" style="margin: 5px; margin-left: 0px;" @change="inputHandler($event)">
                   <button :disabled="hasFile == 0 || validated == 0" @click="submitForm()">Upload Photo</button>
                 </slot>
               </div>
