@@ -25,10 +25,10 @@
               <div class="modal-footer">
                 <slot name="footer">
 
-                  <button :disabled="notReady == 1" class="modal-default-button" @click="$emit('close')">
+                  <button :disabled="notReady == 1" class="modal-default-button" style="margin:5px" @click="$emit('close')">
                     OK
                   </button>
-                  <button :disabled="uploading == 1" class="modal-default-button" @click="$emit('close')">
+                  <button :disabled="uploading == 1" class="modal-default-button" style="margin:5px" @click="$emit('close')">
                     Back
                   </button>
                 </slot>
@@ -158,6 +158,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#inputGroupFile02 {
+  marin: 5px;
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
