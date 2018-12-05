@@ -54,9 +54,10 @@
 						console.log("in onload for update image xmlhttpr");
 						if (xhr.readyState === xhr.DONE) {
 							if (xhr.status === 200) {
-								console.log("Success! Logging in...");
-								this.$emit("isLoggedIn", true);
-								this.$emit("username", this.input.username);
+                console.log("Success! Logging in...");
+                this.$emit('login', true);
+                this.$router.push({ path: `/home/${this.input.username}`});
+
 							}
 							else if (xhr.status === 401)
 							{

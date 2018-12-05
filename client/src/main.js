@@ -12,5 +12,14 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  data: {
+    userExists: false
+  },
+  methods: {
+    authenticate(bool) {
+      console.log("at the highest level: ", bool);
+      this.userExists = bool;
+    }
+  },
+  template: '<App :userExists="userExists" @userexists="authenticate"/>'
 })
