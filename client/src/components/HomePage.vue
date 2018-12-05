@@ -3,7 +3,7 @@
 
     <div v-if="isLoggedIn">
       <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="showModal = true" @logout="logOut"></CustomNav>
-      <Modal v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @test="test" @close="addedMarker"></Modal>
+      <Modal v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @close="hideModal"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
         :map-options="{
@@ -50,6 +50,9 @@ export default {
     },
     test() {
       console.log("You added a marker");
+    },
+    hideModal() {
+      this.showModal = false;
     },
 	setUser(name) {
     this.username = name;
@@ -119,7 +122,7 @@ export default {
     },
 
     addedMarker() {
-      this.showModal = false;
+
       console.log("heard the addedMarker event from nav, passing it to root so that child (map) can hear it");
       this.loadmap(this.map);
     },

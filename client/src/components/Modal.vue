@@ -16,14 +16,16 @@
                 <slot name="body">
                   <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" @change="checkValidation()">
                   <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude"  @change="checkValidation()">
+                  <br>
                   <input type="file" class="custom-file-input" id="inputGroupFile02" :disabled="validated == 1" @change="inputHandler($event)">
+                  <button @click="submitForm()">Upload Photo</button>
                 </slot>
               </div>
 
               <div class="modal-footer">
                 <slot name="footer">
 
-                  <button v-if="lon != 0 && lat != 0" class="modal-default-button" @click="submitForm()">
+                  <button v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
                     OK
                   </button>
                 </slot>
@@ -59,9 +61,7 @@ export default {
 
     submitForm() {
 
-      this.requestImage(this.file).then(() => {
-        this.$emit('close', this.lon, this.lat);
-      });
+      this.requestImage(this.file);
 
     },
 
