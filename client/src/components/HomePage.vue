@@ -2,7 +2,7 @@
   <div class="map">
 
     <div v-if="isLoggedIn">
-      <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @clickLabel="labelClick" @logout="logOut"></CustomNav>
+      <CustomNav v-if="isLoggedIn" :username="username" contextName="home" @zoomTo="getUserLocation" @clickLabel="labelClick" @logout="logOut"></CustomNav>
       <Modal :notReady="notReady" :uploading="uploading" v-if="showModal" :username="username" :lon="lon" :lat="lat" @addedmarker="addedMarker" @close="hideModal"></Modal>
       <mapbox
         access-token="pk.eyJ1IjoiZHlsYW5hbHZhcmV6MSIsImEiOiJjam4wbjhhdnkxYjVkM3Fyb2luYjhqenZwIn0.XxYiYeuAkCkeBheh1_hYFA"
@@ -38,6 +38,7 @@ export default {
       showModal: false,
       notReady: true,
       uploading: false,
+      map: null
     }
   },
   components: {
@@ -72,7 +73,7 @@ export default {
           console.log("position:", position.coords);
           this.lon = position.coords.longitude;
           this.lat = position.coords.latitude;
-          map.flyTo({
+          this.map.flyTo({
               center: [
                   position.coords.longitude, position.coords.latitude
                   ],
@@ -136,6 +137,7 @@ export default {
 
     //Actual event that triggers on map load
     mapLoaded (map) {
+      this.map = map;
       this.getUserLocation(map);
       this.map = map;
       //Don't do anything on map load since ajax request is too slow

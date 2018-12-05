@@ -14,8 +14,8 @@
 
               <div class="modal-body">
                 <slot name="body">
-                  <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" v-on:blur="checkValidation()">
-                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude"  v-on:blur="checkValidation()">
+                  <label>Longitude: </label><input type="text" v-model="lon" placeholder="longitude" v-on:keyup="checkValidation()" v-on:blur="checkValidation()">
+                  <label>Latitude: </label><input type="text" v-model="lat" placeholder="latitude" v-on:keyup="checkValidation()" v-on:blur="checkValidation()">
                   <br>
                   <input type="file" class="custom-file-input" id="inputGroupFile02" @change="inputHandler($event)">
                   <button :disabled="hasFile == 0 || validated == 0" @click="submitForm()">Upload Photo</button>

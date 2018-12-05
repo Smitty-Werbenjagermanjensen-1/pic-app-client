@@ -53,6 +53,7 @@ export default {
     },
     goToMap() {
       console.log("going to ", this.contextName)
+      this.$emit('zoomTo');
       this.$router.push({ path: `/home/${this.username}`});
     },
     signOut() {
