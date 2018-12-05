@@ -6,7 +6,7 @@
 - To deploy to heroku:
     - Follow the heroku tutorial online (something like `heroku create <your app name here>`)
     - push to that repo (`git push heroku master` or whatever branch your on)
-    - navigate to that heroku link
+    - navigate to that heroku link 
 
 ## Functionality:
 - currently, by clicking on a location on the map, it stores the coordinates of where you click, then by clicking add files, you can add a marker with the image of what you select by clicking on an image after clicking the map (Do not click select file before)
