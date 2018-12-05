@@ -25,7 +25,7 @@
               <div class="modal-footer">
                 <slot name="footer">
 
-                  <button v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
+                  <button :disabled="notReady == 1" v-if="lon != 0 && lat != 0" class="modal-default-button" @click="$emit('close')">
                     OK
                   </button>
                 </slot>
@@ -47,7 +47,7 @@ export default {
       validated: false,
     };
   },
-  props: ["lon", "lat", "username"],
+  props: ["lon", "lat", "username", "notReady"],
   methods: {
 
     checkValidation() {
@@ -124,6 +124,7 @@ export default {
     },
     sendReadySignal() {
       console.log("Firing ready signals");
+      this.notReady = false;
       this.$emit("addedmarker");
       this.$emit('test');
     },
